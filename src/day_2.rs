@@ -3,12 +3,9 @@ struct Input<'a>(&'a str);
 impl<'a> Input<'a> {
     fn get_move(&self) -> Move {
         match self.0 {
-            "A" => Move::Rock,
-            "B" => Move::Paper,
-            "C" => Move::Scissors,
-            "X" => Move::Rock,
-            "Y" => Move::Paper,
-            "Z" => Move::Scissors,
+            "A" | "X" => Move::Rock,
+            "B" | "Y" => Move::Paper,
+            "C" | "Z" => Move::Scissors,
             _ => panic!(""),
         }
     }
