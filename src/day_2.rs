@@ -35,9 +35,9 @@ impl Move {
 
     fn get_outcome(&self, opponents_move: &Self) -> OutCome {
         match (self, opponents_move) {
-            (Move::Rock, Move::Scissors) => OutCome::Win,
-            (Move::Scissors, Move::Paper) => OutCome::Win,
-            (Move::Paper, Move::Rock) => OutCome::Win,
+            (Move::Rock, Move::Scissors)
+            | (Move::Scissors, Move::Paper)
+            | (Move::Paper, Move::Rock) => OutCome::Win,
             (a, b) => {
                 if a == b {
                     OutCome::Draw
