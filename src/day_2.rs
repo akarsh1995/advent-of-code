@@ -74,17 +74,21 @@ fn calc_total_score<'a>(in_str: &'a str) -> u32 {
     sc
 }
 
-#[test]
-fn test_day_2p1_sample() {
-    let sample_string = "A Y\nB X\nC Z";
-    println!("test_day_2p1_sample: {}", calc_total_score(sample_string));
-    assert_eq!(15, calc_total_score(sample_string));
-}
+#[cfg(test)]
+mod tests_p1 {
+    use super::*;
+    #[test]
+    fn test_sample() {
+        let sample_string = "A Y\nB X\nC Z";
+        println!("test_day_2p1_sample: {}", calc_total_score(sample_string));
+        assert_eq!(15, calc_total_score(sample_string));
+    }
 
-#[test]
-fn test_day_2p1() {
-    let some_string: String = std::fs::read_to_string("./data/day_2p1").unwrap();
-    println!("{}", calc_total_score(&some_string));
+    #[test]
+    fn test_input() {
+        let some_string: String = std::fs::read_to_string("./data/day_2p1").unwrap();
+        println!("{}", calc_total_score(&some_string));
+    }
 }
 
 struct Action<'a>(&'a str);
@@ -142,24 +146,29 @@ impl<'a> Input2<'a> {
     }
 }
 
-#[test]
-fn test_day_2p2_sample() {
-    let sample_string = "A Y\nB X\nC Z";
-    let mut s = 0;
-    for k in sample_string.split("\n") {
-        s += Input2(k).get_score();
-    }
-    assert_eq!(12, s);
-}
+#[cfg(test)]
+mod tests_p2 {
+    use super::*;
 
-#[test]
-fn test_day_2p2() {
-    let some_string: String = std::fs::read_to_string("./data/day_2p1").unwrap();
-    let mut s = 0;
-    for k in some_string.split("\n") {
-        if k != "" {
+    #[test]
+    fn test_sample() {
+        let sample_string = "A Y\nB X\nC Z";
+        let mut s = 0;
+        for k in sample_string.split("\n") {
             s += Input2(k).get_score();
         }
+        assert_eq!(12, s);
     }
-    println!("test_day_2p2: {}", s);
+
+    #[test]
+    fn test_input() {
+        let some_string: String = std::fs::read_to_string("./data/day_2p1").unwrap();
+        let mut s = 0;
+        for k in some_string.split("\n") {
+            if k != "" {
+                s += Input2(k).get_score();
+            }
+        }
+        println!("test_input: {}", s);
+    }
 }
