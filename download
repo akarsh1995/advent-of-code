@@ -1,0 +1,8 @@
+#!/usr/bin/fish
+
+set DAY $argv[1]
+set YEAR 2022
+set OUT_FILE year_"$YEAR"__day_"$DAY"
+echo $OUT_FILE
+set SESSION 53616c7465645f5f210d4d3910aceb4e1ab0eda89e7d1fadbc119954452076d5fc0df493d3d8274fcd1bcf6627f407c18f30b8814248d9c0962c89e13c896d9b
+curl -v -XGET -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input"  --output ./data/$OUT_FILE
