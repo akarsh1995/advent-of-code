@@ -1,41 +1,75 @@
+// use itertools;
 use std::collections::HashSet;
 
-const INPUT: &'static str = include_str!("../data/year_2022__day_6");
+pub const INPUT: &'static str = include_str!("../data/year_2022__day_6");
 
-fn get_marker(sample_string: &str) -> u32 {
-    let zipped = sample_string.chars().zip(
-        sample_string.chars().skip(1).zip(
-            sample_string
-                .chars()
-                .skip(2)
-                .zip(sample_string.chars().skip(3)),
-        ),
-    );
-    let mut marker = 0;
-    for (i, (a, (b, (c, d)))) in zipped.enumerate() {
-        if [a, b, c, d].iter().collect::<HashSet<_>>().len() == 4 {
-            marker = i + 4;
-            break;
+pub fn get_marker(sample_string: &str, window: usize) -> u32 {
+    for i in 0..sample_string.len() - window {
+        if sample_string[i..i + window]
+            .chars()
+            .collect::<HashSet<_>>()
+            .len()
+            == window
+        {
+            return (i + window) as u32;
         }
     }
-    marker as u32
+
+    1 as u32
+}
+
+fn get_all_bits_sum(n: usize) -> usize {
+    let mut n = n;
+    let mut s = 0;
+    while n > 0 {
+        s += n & 1;
+        n >>= 1;
+    }
+    return s;
+}
+
+trait LowercaseLetter {
+    fn to_u32_for_bitset(&self) -> u32;
+}
+
+impl LowercaseLetter for u8 {
+    fn to_u32_for_bitset(&self) -> u32 {
+        assert!(self.is_ascii_lowercase());
+        1 << (*self as u32 - 'a' as u32)
+    }
+}
+
+pub fn get_marker_fixed_bitwise(s: &str, w: usize) -> usize {
+    s.as_bytes()
+        .windows(w)
+        .position(|window| {
+            window
+                .iter()
+                .map(|c| c.to_u32_for_bitset())
+                .fold(0, |acc, x| acc | x)
+                .count_ones() as usize
+                == w
+        })
+        .map(|pos| pos + w)
+        .unwrap()
 }
 
 #[cfg(test)]
 mod tests {
-    use std::iter::zip;
 
     use super::*;
-
     #[test]
     fn test_p_1() {
         let sample_string = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw";
-        assert_eq!(get_marker(sample_string), 11);
+        assert_eq!(get_marker_fixed_bitwise(sample_string, 4), 11);
         let sample_string = "bvwbjplbgvbhsrlpgdmjqwftvncz";
-        assert_eq!(get_marker(sample_string), 5);
-        dbg!(get_marker(INPUT));
+        assert_eq!(get_marker_fixed_bitwise(sample_string, 4), 5);
+        assert_eq!(get_marker_fixed_bitwise(INPUT, 4), 1920);
     }
 
     #[test]
-    fn test_p_2() {}
+    fn test_p_2() {
+        dbg!(get_marker(INPUT, 14));
+        assert_eq!(get_marker_fixed_bitwise(INPUT, 14), 2334);
+    }
 }
