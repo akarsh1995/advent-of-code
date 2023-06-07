@@ -14,3 +14,6 @@ itertools = "0.10.5"
 name = "day_6"
 harness = false
 
+[dev-dependencies]
+test-case = "3.1.0"
+

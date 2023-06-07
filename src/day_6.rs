@@ -1,5 +1,5 @@
-// use itertools;
-use std::collections::HashSet;
+#[allow(unused)]
+use std::{collections::HashSet, io::Read};
 
 pub const INPUT: &'static str = include_str!("../data/year_2022__day_6");
 
@@ -56,20 +56,16 @@ pub fn get_marker_fixed_bitwise(s: &str, w: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
-    #[test]
-    fn test_p_1() {
-        let sample_string = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw";
-        assert_eq!(get_marker_fixed_bitwise(sample_string, 4), 11);
-        let sample_string = "bvwbjplbgvbhsrlpgdmjqwftvncz";
-        assert_eq!(get_marker_fixed_bitwise(sample_string, 4), 5);
-        assert_eq!(get_marker_fixed_bitwise(INPUT, 4), 1920);
-    }
+    use test_case::test_case;
 
-    #[test]
-    fn test_p_2() {
-        dbg!(get_marker(INPUT, 14));
-        assert_eq!(get_marker_fixed_bitwise(INPUT, 14), 2334);
+    #[test_case(7, "mjqjpqmgbljsphdztnvjfqwrcgsmlb", 4)]
+    #[test_case(5, "bvwbjplbgvbhsrlpgdmjqwftvncz", 4)]
+    #[test_case(6, "nppdvjthqldpwncqszvftbrmjlhg", 4)]
+    #[test_case(10, "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 4)]
+    #[test_case(11, "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 4)]
+    #[test_case(2334, INPUT, 14)]
+    fn test_find_marker(res: usize, s: &str, w: usize) {
+        assert_eq!(res, get_marker_fixed_bitwise(s, w));
     }
 }
