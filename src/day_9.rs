@@ -37,41 +37,43 @@ impl Default for Knot {
 }
 
 impl Knot {
-    fn move_head(&mut self, diff: Coordinates) {
-        self.head.position += diff.clone();
-        let tail_new_pos = match (self.head.position - self.tail.position).into() {
-            (0, 0) => (0, 0),
-            // touching side by side
-            // up | down | right | left
-            (0, 1) | (0, -1) | (1, 0) | (-1, 0) => (0, 0),
-            // touching diagonally
-            // top-right | top-left | bottom-right | bottom-left
-            (1, 1) | (-1, 1) | (1, -1) | (-1, -1) => (0, 0),
-            // need to move up | down | right | left
-            (0, 2) => (0, 1),
-            (0, -2) => (0, -1),
-            (2, 0) => (1, 0),
-            (-2, 0) => (-1, 0),
-            // need to move diagonal
-            // top-right | top-left | bottom-right | bottom-left
-            (2, 1) => (1, 1),
-            (2, -1) => (1, -1),
-            // need to move left diagonally
-            (-2, 1) => (-1, 1),
-            (-2, -1) => (-1, -1),
-            // need to move up/down diagonally
-            (1, 2) => (1, 1),
-            (-1, 2) => (-1, 1),
-            (1, -2) => (1, -1),
-            (-1, -2) => (-1, -1),
-            (x, y) => panic!(
-                "({x}, {y}) are not valid differences. {:?}, {:?}",
-                self.head.position, self.tail.position
-            ),
-        };
+    fn move_head(&mut self, diff: Coordinates, n_steps: usize) {
+        for _ in 0..n_steps {
+            self.head.position += diff.clone();
+            let tail_new_pos = match (self.head.position - self.tail.position).into() {
+                (0, 0) => (0, 0),
+                // touching side by side
+                // up | down | right | left
+                (0, 1) | (0, -1) | (1, 0) | (-1, 0) => (0, 0),
+                // touching diagonally
+                // top-right | top-left | bottom-right | bottom-left
+                (1, 1) | (-1, 1) | (1, -1) | (-1, -1) => (0, 0),
+                // need to move up | down | right | left
+                (0, 2) => (0, 1),
+                (0, -2) => (0, -1),
+                (2, 0) => (1, 0),
+                (-2, 0) => (-1, 0),
+                // need to move diagonal
+                // top-right | top-left | bottom-right | bottom-left
+                (2, 1) => (1, 1),
+                (2, -1) => (1, -1),
+                // need to move left diagonally
+                (-2, 1) => (-1, 1),
+                (-2, -1) => (-1, -1),
+                // need to move up/down diagonally
+                (1, 2) => (1, 1),
+                (-1, 2) => (-1, 1),
+                (1, -2) => (1, -1),
+                (-1, -2) => (-1, -1),
+                (x, y) => panic!(
+                    "({x}, {y}) are not valid differences. {:?}, {:?}",
+                    self.head.position, self.tail.position
+                ),
+            };
 
-        self.tail.position += tail_new_pos.into();
-        self.movements.insert(self.tail.position.clone());
+            self.tail.position += tail_new_pos.into();
+            self.movements.insert(self.tail.position.clone());
+        }
     }
 
     fn get_total_positions(&self) -> u32 {
@@ -176,12 +178,10 @@ R 2"#,
         let mut bridge = Knot::default();
         for line in input.lines() {
             let mut trace = line.split_whitespace();
-            let first = trace.next().unwrap().chars().nth(0).unwrap();
-            let second = trace.next().unwrap().parse::<u32>().unwrap();
-            for _ in 0..second {
-                let movement: Movement = first.into();
-                bridge.move_head(movement.into())
-            }
+            let direction = trace.next().unwrap().chars().nth(0).unwrap();
+            let n_steps = trace.next().unwrap().parse::<usize>().unwrap();
+            let movement: Movement = direction.into();
+            bridge.move_head(movement.into(), n_steps)
         }
         assert_eq!(bridge.get_total_positions(), n_moves);
     }
@@ -191,12 +191,10 @@ R 2"#,
         let mut bridge = Knot::default();
         for line in input.lines() {
             let mut trace = line.split_whitespace();
-            let first = trace.next().unwrap().chars().nth(0).unwrap();
-            let second = trace.next().unwrap().parse::<u32>().unwrap();
-            for _ in 0..second {
-                let movement: Movement = first.into();
-                bridge.move_head(movement.into())
-            }
+            let direction = trace.next().unwrap().chars().nth(0).unwrap();
+            let n_steps = trace.next().unwrap().parse::<usize>().unwrap();
+            let movement: Movement = direction.into();
+            bridge.move_head(movement.into(), n_steps)
         }
         assert_eq!(bridge.get_total_positions(), 6090); //after submission
     }
