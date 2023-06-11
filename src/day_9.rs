@@ -1,4 +1,8 @@
-use std::{collections::HashSet, fmt::Debug, ptr::write};
+use std::{
+    collections::HashSet,
+    fmt::Debug,
+    ops::{AddAssign, Sub},
+};
 
 pub const INPUT: &'static str = include_str!("../data/year_2022__day_9");
 
@@ -10,13 +14,13 @@ struct Tail {
     position: Coordinates,
 }
 
-pub struct Bridge {
+pub struct Knot {
     head: Head,
     tail: Tail,
     movements: HashSet<Coordinates>,
 }
 
-impl Default for Bridge {
+impl Default for Knot {
     fn default() -> Self {
         let mut h = HashSet::new();
         h.insert((0, 0).into());
@@ -32,21 +36,41 @@ impl Default for Bridge {
     }
 }
 
-impl Bridge {
-    fn move_head(&mut self, to: Movement) {
-        // if heads and tails are on the same coordinates then only move heads not tails
-        let old_pos = self.head.position.clone();
-        self.head.position = self.head.position.move_to(&to);
-        let new_pos = old_pos.move_to(&to);
+impl Knot {
+    fn move_head(&mut self, diff: Coordinates) {
+        self.head.position += diff.clone();
+        let tail_new_pos = match (self.head.position - self.tail.position).into() {
+            (0, 0) => (0, 0),
+            // touching side by side
+            // up | down | right | left
+            (0, 1) | (0, -1) | (1, 0) | (-1, 0) => (0, 0),
+            // touching diagonally
+            // top-right | top-left | bottom-right | bottom-left
+            (1, 1) | (-1, 1) | (1, -1) | (-1, -1) => (0, 0),
+            // need to move up | down | right | left
+            (0, 2) => (0, 1),
+            (0, -2) => (0, -1),
+            (2, 0) => (1, 0),
+            (-2, 0) => (-1, 0),
+            // need to move diagonal
+            // top-right | top-left | bottom-right | bottom-left
+            (2, 1) => (1, 1),
+            (2, -1) => (1, -1),
+            // need to move left diagonally
+            (-2, 1) => (-1, 1),
+            (-2, -1) => (-1, -1),
+            // need to move up/down diagonally
+            (1, 2) => (1, 1),
+            (-1, 2) => (-1, 1),
+            (1, -2) => (1, -1),
+            (-1, -2) => (-1, -1),
+            (x, y) => panic!(
+                "({x}, {y}) are not valid differences. {:?}, {:?}",
+                self.head.position, self.tail.position
+            ),
+        };
 
-        if new_pos.is_diagonal(&self.tail.position)
-            || new_pos.overlaps(&self.tail.position)
-            || new_pos.is_beside(&self.tail.position)
-        {
-            return;
-        }
-
-        self.tail.position = old_pos.clone();
+        self.tail.position += tail_new_pos.into();
         self.movements.insert(self.tail.position.clone());
     }
 
@@ -55,7 +79,7 @@ impl Bridge {
     }
 }
 
-#[derive(PartialEq, Eq, Clone, Hash)]
+#[derive(PartialEq, Eq, Clone, Hash, Copy)]
 struct Coordinates {
     x: i32,
     y: i32,
@@ -67,37 +91,27 @@ impl Debug for Coordinates {
     }
 }
 
-impl Coordinates {
-    fn is_origin(&self) -> bool {
-        self.x == 0 && self.y == 0
+impl AddAssign for Coordinates {
+    fn add_assign(&mut self, other: Self) {
+        self.x += other.x;
+        self.y += other.y;
     }
+}
 
-    fn move_to(&self, m: &Movement) -> Self {
-        match m {
-            Movement::Right => (self.x + 1, self.y),
-            Movement::Left => (self.x - 1, self.y),
-            Movement::Up => (self.x, self.y + 1),
-            Movement::Down => (self.x, self.y - 1),
+impl Sub for Coordinates {
+    type Output = Self;
+
+    fn sub(self, behind: Self) -> Self::Output {
+        Self {
+            x: self.x - behind.x,
+            y: self.y - behind.y,
         }
-        .into()
     }
+}
 
-    fn is_diagonal(&self, other: &Coordinates) -> bool {
-        (*other == self.move_to(&Movement::Right).move_to(&Movement::Up))
-            || *other == self.move_to(&Movement::Right).move_to(&Movement::Down)
-            || *other == self.move_to(&Movement::Left).move_to(&Movement::Down)
-            || *other == self.move_to(&Movement::Left).move_to(&Movement::Up)
-    }
-
-    fn overlaps(&self, other: &Coordinates) -> bool {
-        self == other
-    }
-
-    fn is_beside(&self, other: &Coordinates) -> bool {
-        *other == self.move_to(&Movement::Right)
-            || *other == self.move_to(&Movement::Left)
-            || *other == self.move_to(&Movement::Up)
-            || *other == self.move_to(&Movement::Down)
+impl Into<(i32, i32)> for Coordinates {
+    fn into(self) -> (i32, i32) {
+        (self.x, self.y)
     }
 }
 
@@ -106,6 +120,18 @@ enum Movement {
     Left,
     Up,
     Down,
+}
+
+impl Into<Coordinates> for Movement {
+    fn into(self) -> Coordinates {
+        match self {
+            Movement::Right => (1, 0),
+            Movement::Left => (-1, 0),
+            Movement::Up => (0, 1),
+            Movement::Down => (0, -1),
+        }
+        .into()
+    }
 }
 
 impl From<char> for Movement {
@@ -132,7 +158,7 @@ impl From<(i32, i32)> for Coordinates {
 #[cfg(test)]
 mod tests {
     use super::INPUT;
-    use super::{Bridge, Coordinates, Movement};
+    use super::{Knot, Movement};
     use test_case::test_case;
 
     #[test_case(
@@ -147,14 +173,14 @@ R 2"#,
         13
     )]
     fn test_a(input: &str, n_moves: u32) {
-        let mut bridge = Bridge::default();
+        let mut bridge = Knot::default();
         for line in input.lines() {
             let mut trace = line.split_whitespace();
             let first = trace.next().unwrap().chars().nth(0).unwrap();
             let second = trace.next().unwrap().parse::<u32>().unwrap();
             for _ in 0..second {
                 let movement: Movement = first.into();
-                bridge.move_head(movement)
+                bridge.move_head(movement.into())
             }
         }
         assert_eq!(bridge.get_total_positions(), n_moves);
@@ -162,16 +188,16 @@ R 2"#,
 
     #[test_case(INPUT)]
     fn test_p_1(input: &str) {
-        let mut bridge = Bridge::default();
+        let mut bridge = Knot::default();
         for line in input.lines() {
             let mut trace = line.split_whitespace();
             let first = trace.next().unwrap().chars().nth(0).unwrap();
             let second = trace.next().unwrap().parse::<u32>().unwrap();
             for _ in 0..second {
                 let movement: Movement = first.into();
-                bridge.move_head(movement)
+                bridge.move_head(movement.into())
             }
         }
-        dbg!(bridge.get_total_positions());
+        assert_eq!(bridge.get_total_positions(), 6090); //after submission
     }
 }
