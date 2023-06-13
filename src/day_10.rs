@@ -80,9 +80,9 @@ impl CPU {
         if self.register_x == -1 {
             display_row[(self.cycles % 40) as usize] = '#';
         }
-        if self.register_x >= 0 && self.register_x <= 39 {
+        if self.register_x >= -1 && self.register_x <= 39 {
             let c_mask = cycle_mask(self.cycles % 40);
-            let s_mask = sprite_value(self.register_x as u32);
+            let s_mask = sprite_value(self.register_x as i32);
             if (c_mask & s_mask) > 0 {
                 display_row[(self.cycles % 40) as usize] = '#';
             } else {
@@ -124,8 +124,29 @@ fn cycle_mask(cycle: u32) -> u64 {
     (0b1000000000000000000000000000000000000000 >> (cycle % 40)) & DISPLAY_MASK
 }
 
-fn sprite_value(pos: u32) -> u64 {
-    (0b11100000000000000000000000000000000000000 >> pos) & DISPLAY_MASK
+fn sprite_value(pos: i32) -> u64 {
+    (if pos >= 0 {
+        0b11100000000000000000000000000000000000000 >> pos
+    } else {
+        overflow_shift(0b11100000000000000000000000000000000000000, pos.abs())
+    }) & DISPLAY_MASK
+}
+
+fn msb_ones(mut num: u64) -> u64 {
+    if num == 0 {
+        return 0;
+    }
+    let mut msb = 0;
+    num >>= 1;
+    while num > 0 {
+        num >>= 1;
+        msb += 1;
+    }
+    1 << msb
+}
+
+fn overflow_shift(num: u64, pos: i32) -> u64 {
+    (num << pos) & (msb_ones(num) >> pos)
 }
 
 #[cfg(test)]
