@@ -1,4 +1,4 @@
-const INPUT: &'static str = include_str!("../data/year_2022__day_4");
+const INPUT: &'static str = include_str!("../../data/year_2022__day_4");
 
 #[derive(Clone, Copy)]
 struct Range {

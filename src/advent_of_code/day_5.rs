@@ -1,4 +1,4 @@
-const INPUT: &'static str = include_str!("../data/year_2022__day_5");
+const INPUT: &'static str = include_str!("../../data/year_2022__day_5");
 
 struct Move {
     n: u32,
@@ -17,7 +17,7 @@ impl Move {
     }
 }
 
-fn read_stacks() -> Vec<Vec<char>> {
+pub fn read_stacks() -> Vec<Vec<char>> {
     let mut v = vec![];
     for col in 0..9 {
         let mut lines = INPUT.lines();

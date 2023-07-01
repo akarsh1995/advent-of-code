@@ -1,7 +1,7 @@
 #[allow(unused)]
 use std::{collections::HashSet, io::Read};
 
-pub const INPUT: &'static str = include_str!("../data/year_2022__day_6");
+pub const INPUT: &'static str = include_str!("../../data/year_2022__day_6");
 
 pub fn get_marker(sample_string: &str, window: usize) -> u32 {
     for i in 0..sample_string.len() - window {
@@ -18,7 +18,7 @@ pub fn get_marker(sample_string: &str, window: usize) -> u32 {
     1 as u32
 }
 
-fn get_all_bits_sum(n: usize) -> usize {
+pub fn get_all_bits_sum(n: usize) -> usize {
     let mut n = n;
     let mut s = 0;
     while n > 0 {

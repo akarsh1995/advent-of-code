@@ -268,14 +268,14 @@ mod tests {
         assert_eq!(Monkey::parse(input), output);
     }
 
-    #[test_case(include_str!("../data/year_2022__day_11"); "test_parsing_monkeys_sample")]
+    #[test_case(include_str!("../../data/year_2022__day_11"); "test_parsing_monkeys_sample")]
     fn test_parsing_monkeys_sample(input: &str) {
         for m in input.split("\n\n") {
             dbg!(Monkey::parse(m));
         }
     }
 
-    #[test_case(include_str!("../data/year_2022__day_11"); "test_day_11")]
+    #[test_case(include_str!("../../data/year_2022__day_11"); "test_day_11")]
     fn test_day_11(input: &str) {
        let k = input.split("\n\n").map( |l| 
             Monkey::parse(l)
@@ -290,7 +290,7 @@ mod tests {
         println!("{:?}{}", ti, ti[..2].iter().fold(1, |x, y| x * y));
     }
 
-    #[test_case(include_str!("../data/sample_day_11"); "test_sample_p1")]
+    #[test_case(include_str!("../../data/sample_day_11"); "test_sample_p1")]
     fn test_sample_p1(input: &str) {
        let k = input.split("\n\n").map( |l| 
             Monkey::parse(l)
@@ -304,5 +304,4 @@ mod tests {
         ti.reverse();
         println!("{:?}{}", ti, ti[..2].iter().fold(1, |x, y| x * y));
     }
-
 }

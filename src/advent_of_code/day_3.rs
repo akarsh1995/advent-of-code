@@ -27,7 +27,7 @@ fn get_ordval_from_string(s: &str) -> u8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::day_3::get_ordval_from_string;
+    use super::super::day_3::get_ordval_from_string;
 
     use super::three_lines_common;
 
@@ -48,7 +48,7 @@ CrZsJsPPZsGzwwsLwLmpwMDw"#;
 
     #[test]
     fn test_p_1() {
-        let f: &str = include_str!("../data/year_2022__day_3");
+        let f: &str = include_str!("../../data/year_2022__day_3");
         let mut s = 0;
         for k in f.split("\n") {
             s += get_ordval_from_string(k) as u32;
@@ -68,7 +68,7 @@ PmmdzqPrVvPwwTWBwg"#;
 
     #[test]
     fn test_p_2() {
-        let f: &str = include_str!("../data/year_2022__day_3");
+        let f: &str = include_str!("../../data/year_2022__day_3");
         let mut total = 0;
         let mut s = f.lines();
         let mut fl = s.next();

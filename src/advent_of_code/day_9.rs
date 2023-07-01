@@ -6,7 +6,7 @@ use std::{
 
 use itertools::Itertools;
 
-pub const INPUT: &'static str = include_str!("../data/year_2022__day_9");
+pub const INPUT: &'static str = include_str!("../../data/year_2022__day_9");
 
 #[derive(Debug)]
 struct Head {

@@ -152,7 +152,7 @@ fn overflow_shift(num: u64, pos: i32) -> u64 {
 #[cfg(test)]
 mod bit_tests {
 
-    pub const INPUT: &'static str = include_str!("../data/year_2022__day_10");
+    pub const INPUT: &'static str = include_str!("../../data/year_2022__day_10");
     use super::*;
 
     #[test]
@@ -209,7 +209,7 @@ mod tests {
         assert_eq!(cpu.register_x, -1);
     }
 
-    #[test_case(include_str!("../data/sample_day_10"), 13140; "test_cpu_instructions_signal_strength_sample")]
+    #[test_case(include_str!("../../data/sample_day_10"), 13140; "test_cpu_instructions_signal_strength_sample")]
     fn test_cpu_instructions_signal_strength_sample(input: &str, signal_strength: i32) {
         let mut ss: i32 = 0;
         let mut next_cycle = 20;
@@ -228,7 +228,7 @@ mod tests {
         assert_eq!(ss, signal_strength);
     }
 
-    #[test_case(include_str!("../data/year_2022__day_10"); "test_cpu_instructions_signal_strength_p_1")]
+    #[test_case(include_str!("../../data/year_2022__day_10"); "test_cpu_instructions_signal_strength_p_1")]
     fn test_cpu_instructions_signal_strength_p_1(input: &str) {
         let mut ss: i32 = 0;
         let mut next_cycle = 20;
@@ -247,7 +247,7 @@ mod tests {
         dbg!(ss);
     }
 
-    #[test_case(include_str!("../data/sample_day_10"); "test_cpu_instructions_display_p_2_sample")]
+    #[test_case(include_str!("../../data/sample_day_10"); "test_cpu_instructions_display_p_2_sample")]
     fn test_cpu_instructions_display_p_2_sample(input: &str) {
         // let mut ss: i32 = 0;
         // let mut next_cycle = 20;
@@ -264,7 +264,7 @@ mod tests {
         println!("{}", &cpu);
     }
 
-    #[test_case(include_str!("../data/year_2022__day_10"); "test_cpu_instructions_display_p_2")]
+    #[test_case(include_str!("../../data/year_2022__day_10"); "test_cpu_instructions_display_p_2")]
     fn test_cpu_instructions_display_p_2(input: &str) {
         // let mut ss: i32 = 0;
         // let mut next_cycle = 20;

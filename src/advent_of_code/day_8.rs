@@ -1,7 +1,7 @@
 #[allow(unused)]
 use std::{collections::HashSet, io::Read};
 
-pub const INPUT: &'static str = include_str!("../data/year_2022__day_8");
+pub const INPUT: &'static str = include_str!("../../data/year_2022__day_8");
 
 trait RowCompare {
     fn calc(&self, row: &Vec<u32>) -> Vec<u32>;
