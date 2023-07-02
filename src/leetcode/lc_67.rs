@@ -35,6 +35,10 @@ fn bin_add(a: &str, b: &str) -> String {
             f_b = '0';
         }
 
+        if !a_filled && !b_filled && carry == 0 {
+            break;
+        }
+
         let k = match (f_a, f_b) {
             ('1', '1') => {
                 if carry == 1 {
@@ -67,17 +71,7 @@ fn bin_add(a: &str, b: &str) -> String {
         };
         s.push(k);
     }
-    let mut j = s.chars().rev();
-    while let Some(first_char) = j.next() {
-        if first_char == '0' {
-            continue;
-        } else {
-            let mut jj = String::from(first_char);
-            jj.push_str(j.collect::<String>().as_str());
-            return jj;
-        }
-    }
-    "0".to_string()
+    s.chars().rev().collect()
 }
 
 #[cfg(test)]
