@@ -23,6 +23,7 @@ def depth_min(node: Optional[tree.TreeNode]) -> int:
 
 def test():
     root = tree.create_test_tree_from_lc_string('[3,9,20,null,null,15,7]')
+    print(root)
     assert depth_min(root) == 2
 
 def test2():

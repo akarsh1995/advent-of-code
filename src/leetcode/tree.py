@@ -2,14 +2,31 @@
 
 from collections import deque
 from typing import List, Optional
+import ast
+from PrettyPrint import PrettyPrintTree
+
 
 class TreeNode:
+    pt = PrettyPrintTree(lambda x: prep_list(x), lambda x: x.val, return_instead_of_print=True)
+
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
-def create_test_tree_from_array(arr, i, n) -> Optional[TreeNode]:
+    def __str__(self):
+        return f"\n{self.pt(self)}"
+
+def prep_list(x: Optional[TreeNode]):
+    v = []
+    if x:
+        if x.left:
+            v.append(x.left)
+        if x.right:
+            v.append(x.right)
+    return v
+
+def create_test_tree_from_array(arr) -> Optional[TreeNode]:
     if not arr: # array empty
         return None
 
@@ -31,12 +48,8 @@ def create_test_tree_from_array(arr, i, n) -> Optional[TreeNode]:
     return root
 
 
-import ast
-
 def create_test_tree_from_lc_string(s: str) -> Optional[TreeNode]:
     arr: List[Optional[int]] = ast.literal_eval(s.replace('null', 'None'))
-    return create_test_tree_from_array(arr, 0, len(arr))
-    
-
-
+    tree = create_test_tree_from_array(arr)
+    return tree
 
