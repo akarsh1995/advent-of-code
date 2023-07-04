@@ -40,10 +40,11 @@ def create_test_tree_from_array(arr) -> Optional[TreeNode]:
             node.left = TreeNode(arr[0])
             d.append(node.left)
         arr = arr[1:]
-        if arr[0]:
-            node.right = TreeNode(arr[0])
-            d.append(node.right)
-        arr = arr[1:]
+        if arr:
+            if arr[0]:
+                node.right = TreeNode(arr[0])
+                d.append(node.right)
+            arr = arr[1:]
 
     return root
 
