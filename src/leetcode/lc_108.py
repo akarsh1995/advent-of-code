@@ -69,16 +69,11 @@ def ins(arr: List[int]) -> TreeNode:
     insert_it(root, arr[m+1:])
     return root
 
-def test_compare(): 
+def test_bst_insertion_1(): 
     v = [-10,-3,0,5,9]
-    print('\n', ins(v))
+    bst = [0, -3, 9, -10, None, 5, None]
+    assert ins(v).traverse() == bst
 
-
-
-def test_some():
-    print('\n',ins([0, 1, 2, 3, 4, 5]))
-
-# def test_another():
-#     print(ins([-10,-3,0,5,9]))
-
-
+def test_bst_insertion_2():
+    v = ins([0, 1, 2, 3, 4, 5]).traverse()
+    assert v == [3, 1, 5, 0, 2, 4, None]
