@@ -9,13 +9,13 @@ from tree import TreeNode, create_test_tree_from_lc_string
 
 def trav(node: Optional[TreeNode], sum_so_far: int, target: int):
     if not node:
-        return False 
+        return False
     sum_so_far += node.val
     if not node.left and not node.right:
         return sum_so_far == target
-    elif node.left and not node.right: 
+    elif node.left and not node.right:
         return trav(node.left, sum_so_far, target)
-    elif not node.left and  node.right: 
+    elif not node.left and  node.right:
         return trav(node.right, sum_so_far, target)
     else:
         return trav(node.left, sum_so_far, target) or trav(node.right, sum_so_far, target)
@@ -31,4 +31,3 @@ def test2():
 def test3():
     root = create_test_tree_from_lc_string('[1,2,3]')
     assert not trav(root, 0, 5)
-

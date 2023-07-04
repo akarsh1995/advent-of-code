@@ -26,5 +26,3 @@ def get_words(strs: List[str]):
 
 def test():
     assert get_words(["eat","tea","tan","ate","nat","bat"]) == [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]
-
-    

@@ -12,7 +12,7 @@ struct Monkey {
     test: i32,
     throw_true: u32,
     throw_false: u32,
-    times_inspected: u32, 
+    times_inspected: u32,
 }
 
 impl Display for Monkey {
@@ -255,7 +255,7 @@ mod tests {
         assert_eq!(o, output);
     }
 
-    #[test_case(MONKEY_SAMPLE_STRING, 
+    #[test_case(MONKEY_SAMPLE_STRING,
         Monkey {
             items: vec![79, 98].iter().map(|i| *i as i32).collect::<VecDeque<_>>(),
             operation: Operation::Multiply { value: 19.into() },
@@ -277,7 +277,7 @@ mod tests {
 
     #[test_case(include_str!("../../data/year_2022__day_11"); "test_day_11")]
     fn test_day_11(input: &str) {
-       let k = input.split("\n\n").map( |l| 
+       let k = input.split("\n\n").map( |l|
             Monkey::parse(l)
         ).collect::<Vec<_>>();
         let mut k = KeepAwayGame { monkeys: k };
@@ -292,7 +292,7 @@ mod tests {
 
     #[test_case(include_str!("../../data/sample_day_11"); "test_sample_p1")]
     fn test_sample_p1(input: &str) {
-       let k = input.split("\n\n").map( |l| 
+       let k = input.split("\n\n").map( |l|
             Monkey::parse(l)
         ).collect::<Vec<_>>();
         let mut k = KeepAwayGame { monkeys: k };

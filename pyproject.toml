@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "dsa-practice"
+version = "0.1.0"
+description = ""
+authors = ["Akarsh Jain <akarsh.1995.02@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dsa_practice"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+prettyprinttree = "^1.36.2"
+pre-commit = "^3.3.3"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -29,7 +29,3 @@ def test():
 def test2():
     root = tree.create_test_tree_from_lc_string('[2,null,3,null,4,null,5,null,6]')
     assert depth_min(root) == 5
-
-
-
-

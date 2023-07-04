@@ -28,10 +28,10 @@ def insertLevelOrder(arr, i, n):
     if i < n:
         if arr[i] is not None:
             root = TreeNode(arr[i])
-     
+
             # insert left child
             root.left = insertLevelOrder(arr, 2 * i + 1, n)
-     
+
             # insert right child
             root.right = insertLevelOrder(arr, 2 * i + 2, n)
     return root
@@ -44,4 +44,3 @@ def test2():
     root = [3,9,20,None,None,15,7]
     root = insertLevelOrder(root, 0, len(root))
     assert check_balanced(root)
-    

@@ -16,11 +16,10 @@ def max_depth(node: Optional[TreeNode]) -> int:
     return 1 + max(max_depth(node.left), max_depth(node.right))
 
 
-def test_compare(): 
+def test_compare():
     root1 = TreeNode(3)
     root1.left = TreeNode(9)
     root1.right = TreeNode(20)
     root1.right.right = TreeNode(7)
     root1.right.left = TreeNode(15)
     assert max_depth(root1) == 3
-

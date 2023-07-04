@@ -14,7 +14,7 @@ from bisect import bisect_left
 def get_triplets(arr: List[int]) -> List[List[int]]:
 
     arr.sort()
-    v = set() 
+    v = set()
     zero_pos = bisect_left(arr, x=0)
 
     if arr[zero_pos:]:
@@ -29,12 +29,12 @@ def get_triplets(arr: List[int]) -> List[List[int]]:
         for _, next_elem in enumerate(arr[(i + 1):]):
             target = (0 - (elem + next_elem))
             if next_elem == target and counts[next_elem] == 1:
-                continue 
+                continue
             if target in counts:
                 k = [elem, next_elem, target]
                 k.sort()
                 v.add(tuple(k))
-    return list(map(list, v)) 
+    return list(map(list, v))
 
 
 def test():

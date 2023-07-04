@@ -21,7 +21,7 @@ def are_symmetric(node1: Optional[TreeNode], node2: Optional[TreeNode]) -> bool:
         return node1.val == node2.val and are_symmetric(node1.right, node2.left) and are_symmetric(node1.left, node2.right)
 
 
-def test_compare(): 
+def test_compare():
     root1 = TreeNode(1)
     root1.left = TreeNode(2)
     root1.left.left = TreeNode(3)

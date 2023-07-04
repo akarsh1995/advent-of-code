@@ -33,4 +33,3 @@ def test1():
     assert check_palin(' ')
     assert check_palin('8')
     assert not check_palin('89')
-

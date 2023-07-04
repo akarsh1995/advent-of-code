@@ -18,7 +18,7 @@ def inorder_compare(node: Optional[TreeNode], second: Optional[TreeNode]) -> boo
         return node is None
     return inorder_compare(node.left, second.left) and node.val == second.val and inorder_compare(node.right, second.right)
 
-def test_compare(): 
+def test_compare():
     root1 = TreeNode(1)
     root1.left = TreeNode(2)
     root1.right = TreeNode(3)
@@ -26,4 +26,3 @@ def test_compare():
     root2.left = TreeNode(2)
     root2.right = TreeNode(3)
     assert inorder_compare(root1, root2)
-

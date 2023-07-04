@@ -1,4 +1,4 @@
-# Leetcode TreeNode Type 
+# Leetcode TreeNode Type
 
 from collections import deque
 from typing import List, Optional
@@ -53,4 +53,3 @@ def create_test_tree_from_lc_string(s: str) -> Optional[TreeNode]:
     arr: List[Optional[int]] = ast.literal_eval(s.replace('null', 'None'))
     tree = create_test_tree_from_array(arr)
     return tree
-

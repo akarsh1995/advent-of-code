@@ -14,7 +14,7 @@ class TreeNode:
 
 
     def traverse(self) -> List[Optional[int]]:
-        v: List[Optional[int]] = [self.val] 
+        v: List[Optional[int]] = [self.val]
         _traverse(self.left, self.right, v)
         return v
 
@@ -70,7 +70,7 @@ def ins(arr: List[int]) -> TreeNode:
     insert_it(root, arr[m+1:])
     return root
 
-def test_bst_insertion_1(): 
+def test_bst_insertion_1():
     v = [-10,-3,0,5,9]
     bst = [0, -3, 9, -10, None, 5, None]
     assert ins(v).traverse() == bst

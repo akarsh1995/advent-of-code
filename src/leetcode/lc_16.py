@@ -19,7 +19,7 @@ def get_closest_sum_to_target(arr: List[int], target: int) -> int:
     max_diff = 10**5
 
     for i, fixed in enumerate(arr):
-        l = i + 1 
+        l = i + 1
         h = len(arr) - 1
 
 
@@ -32,7 +32,7 @@ def get_closest_sum_to_target(arr: List[int], target: int) -> int:
                 return three_sum
 
             if diff < max_diff:
-                max_diff = diff 
+                max_diff = diff
                 closest_three_sum = three_sum
 
             if three_sum > target:
@@ -51,7 +51,7 @@ def test():
 def test2():
     arr = [0,0,0]
     target = 1
-    assert get_closest_sum_to_target(arr, target) == 0 
+    assert get_closest_sum_to_target(arr, target) == 0
 
 def test3():
     arr = [-1,-2,-3, -4]
@@ -61,10 +61,9 @@ def test3():
 def test4():
     arr = [-2, 0, 3, 4]
     target = 0
-    assert get_closest_sum_to_target(arr, target) == 1 
+    assert get_closest_sum_to_target(arr, target) == 1
 
 def test5():
     arr = [4,0,5,-5,3,3,0,-4,-5]
     target = -2
     assert get_closest_sum_to_target(arr, target) == -2
-
