@@ -9,11 +9,11 @@ packages = [{include = "dsa_practice"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 prettyprinttree = "^1.36.2"
-pre-commit = "^3.3.3"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
+pre-commit = "^3.3.3"
 
 [build-system]
 requires = ["poetry-core"]
