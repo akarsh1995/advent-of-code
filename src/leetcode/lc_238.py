@@ -1,38 +1,16 @@
 from typing import List
 
-
-def cumulative_multiply(a: List[int]) -> List[int]:
-    l = [1]
-    for elem in a:
-        l.append(elem * l[-1])
-    return l[1:]
-
 def get_prod_except_self(a: List[int]) -> List[int]:
-    np_arry = a
 
-    before = cumulative_multiply(a)
-    after = cumulative_multiply(a[::-1])
-    after = after[::-1]
+    prefix = [1] * len(a)
+    for i, elem in enumerate(a[:-1]):
+        prefix[i + 1]  = (elem * prefix[i]) # leave last element to abide product except self
 
-    l = []
-    for i in range(len(np_arry)):
-        if i == 0:
-            before_elem = 1
-        else:
-            before_elem = before[i - 1]
-
-        if i == len(np_arry) - 1:
-            after_elem = 1
-        else:
-            after_elem = after[i + 1]
-
-        l.append(after_elem * before_elem)
-    return l
-
-
-def test_cum_prod():
-    a = [9, 4,2,3]
-    assert cumulative_multiply(a) == [9, 36, 72, 216]
+    p = 1
+    for i in range(len(a) - 1, -1, -1):
+        prefix[i] *= p
+        p *= a[i]
+    return prefix
 
 
 def test():
