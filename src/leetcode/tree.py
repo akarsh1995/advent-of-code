@@ -36,12 +36,12 @@ def create_test_tree_from_array(arr) -> Optional[TreeNode]:
     d = deque([root])
     while arr:
         node = d.popleft()
-        if arr[0]:
+        if arr[0] is not None:
             node.left = TreeNode(arr[0])
             d.append(node.left)
         arr = arr[1:]
         if arr:
-            if arr[0]:
+            if arr[0] is not None:
                 node.right = TreeNode(arr[0])
                 d.append(node.right)
             arr = arr[1:]
