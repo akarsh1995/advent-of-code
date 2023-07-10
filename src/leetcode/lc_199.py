@@ -20,9 +20,6 @@
 # Input: root = []
 # Output: []
 
-
-
-
 from collections import deque
 from typing import Optional, List
 from tree import TreeNode, create_test_tree_from_lc_string
@@ -50,3 +47,9 @@ def right_v(node: Optional[TreeNode]) -> List[int]:
 def test():
     node = create_test_tree_from_lc_string('[1,2,3,null,5,null,4]')
     assert right_v(node) == [1, 3, 4]
+
+'''
+common mistake:
+    Can forget the left half of the tree
+    could also contain the node deeper than the right half.
+'''
