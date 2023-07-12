@@ -27,12 +27,26 @@
 # kthLargest.add(4);   // return 8
 
 
-
-
-from typing import List, Optional
-from tree import TreeNode
+from typing import List
 from bisect import bisect_left
 
+# binary search manual implementation
+def bisect(vals: List[int], val: int) -> int:
+
+    condition = lambda m: vals[m] > val
+
+    l = 0
+    r = len(vals)
+
+    while l < r:
+        m = l + (r - l) // 2
+
+        if condition(m):
+            r = m
+        else:
+            l = m + 1
+
+    return l
 
 class KthLargest:
     def __init__(self, k: int, nums: List[int]) -> None:
@@ -44,6 +58,11 @@ class KthLargest:
         self.nums.insert(bisect_left(self.nums, val), val)
         return self.nums[-self.k]
 
+    # binary search manual implementation
+    def bsearch(self, val: int) -> int:
+        self.nums.insert(bisect(self.nums, val), val)
+        return self.nums[-self.k]
+
 
 def test():
     kth_largest = KthLargest(3, [4,5,8,2])
@@ -52,3 +71,11 @@ def test():
     assert kth_largest.add(10) == 5
     assert kth_largest.add(9) == 8
     assert kth_largest.add(4) == 8
+
+def test2():
+    kth_largest = KthLargest(3, [4,5,8,2])
+    assert kth_largest.bsearch(3) == 4
+    assert kth_largest.bsearch(5) == 5
+    assert kth_largest.bsearch(10) == 5
+    assert kth_largest.bsearch(9) == 8
+    assert kth_largest.bsearch(4) == 8
